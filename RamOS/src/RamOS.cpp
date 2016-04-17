@@ -10,6 +10,6 @@
 using namespace std;
 
 int main() {
-	cout << "This is our first pull" << endl; // prints !!!Hello World!!!
+	cout << "2nd Attempt" << endl; // prints !!!Hello World!!!
 	return 0;
 }
