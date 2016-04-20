@@ -1,9 +1,4 @@
 language: cpp
 compiler:
     - gcc
-before_script:  
-    - sudo
-    - mkdir build
-    - cd build
-    - make ..
-script: make
+script: sudo make
