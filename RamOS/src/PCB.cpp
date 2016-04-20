@@ -6,6 +6,7 @@
  */
 
 #include "PCB.h"
+#include "Info.h"
 
 PCB::PCB() {
 	// TODO Auto-generated constructor stub
