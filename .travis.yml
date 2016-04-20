@@ -2,6 +2,7 @@ language: cpp
 compiler:
     - gcc
 before_script:  
+    - sudo
     - mkdir build
     - cd build
     - cmake ..
