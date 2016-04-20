@@ -5,5 +5,5 @@ before_script:
     - sudo
     - mkdir build
     - cd build
-    - cmake ..
+    - make ..
 script: make
