@@ -21,11 +21,11 @@ int main() {
 
 	PCB proc1;
 	StateManager sm;
-	sm.m_new_state.push_front(proc1);
+	sm.new_state.push_front(proc1);
 
-	cout << "The new state list contains: " << sm.m_new_state.size() << " elements" << endl;
-	for (list<PCB>::iterator it = sm.m_new_state.begin();
-		 it != sm.m_new_state.end(); it++) {
+	cout << "The new state list contains: " << sm.new_state.size() << " elements" << endl;
+	for (list<PCB>::iterator it = sm.new_state.begin();
+		 it != sm.new_state.end(); it++) {
 		cout << "Start time: " << (*it).info.get_time() << endl;
 	}
 //	cout << "The 1 element has a start time of " << sm.m_new_state.get_allocator(
