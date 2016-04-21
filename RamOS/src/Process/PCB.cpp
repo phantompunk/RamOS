@@ -6,9 +6,13 @@
  */
 
 #include "PCB.h"
+#include "Info.h"
+#include "IO.h"
 
+/*
+ *
+ */
 PCB::PCB() {
-	// TODO Auto-generated constructor stub
 	m_pid = 999;
 }
 void PCB::set_pid(int id) {
