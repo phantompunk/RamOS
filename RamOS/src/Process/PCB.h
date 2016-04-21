@@ -9,6 +9,7 @@
 #define PCB_H_
 
 #include "Info.h"
+#include "IO.h"
 
 
 class PCB {
@@ -18,10 +19,13 @@ private:
 	// State: new, ready, run, blocked, exit
 	// PC indicated the address of the next instruction
 	// Memory stuff
+	// Context Data
+	// IO status info
 	// Accounting info: CPU,real time used,etc
 public:
 	PCB();
 	Info info;
+	IO io;
 	void set_pid(int id);
 	int get_pid();
 	virtual ~PCB();
@@ -32,6 +36,14 @@ public:
 
 	void setInfo(const Info& info) {
 		this->info = info;
+	}
+
+	const IO& getIo() const {
+		return io;
+	}
+
+	void setIo(const IO& io) {
+		this->io = io;
 	}
 };
 
