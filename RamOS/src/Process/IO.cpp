@@ -11,31 +11,18 @@ IO::IO() {
 	// TODO Auto-generated constructor stub
 
 }
-
-int IO::getCompleted() const {
-	return m_completed;
+void IO::set_arrival(int arrive) {
+	m_io_arrival.push_back(arrive);
 }
-
-void IO::setCompleted(int completed) {
-	m_completed = completed;
+void IO::set_wait(int wait) {
+	m_io_wait.push_back(wait);
 }
-
-int IO::getPending() const {
-	return m_pending;
+std::list<int> IO::get_arrival() {
+	return m_io_arrival;
 }
-
-void IO::setPending(int pending) {
-	m_pending = pending;
+std::list<int> IO::get_wait() {
+	return m_io_wait;
 }
-
-int IO::getRequired() const {
-	return m_required;
-}
-
-void IO::setRequired(int required) {
-	m_required = required;
-}
-
 IO::~IO() {
 	// TODO Auto-generated destructor stub
 }

@@ -7,21 +7,21 @@
 
 #ifndef PROCESS_IO_H_
 #define PROCESS_IO_H_
+#include <list>
 
 class IO {
-private:
-	int m_completed;
-	int m_pending;
-	int m_required;
 public:
+	int m_io_required;	// Amount of IO requests needed
+	int m_io_completed;	// Amount of IO requests finished
+	int m_io_pending;	// Amount of IO requests left to go
+	std::list<int> m_io_arrival;
+	std::list<int> m_io_wait;
 	IO();
+	void set_arrival(int arrive);
+	void set_wait(int wait);
+	std::list<int> get_arrival();
+	std::list<int> get_wait();
 	virtual ~IO();
-	int getCompleted() const;
-	void setCompleted(int completed);
-	int getPending() const;
-	void setPending(int pending);
-	int getRequired() const;
-	void setRequired(int required);
 };
 
 #endif /* PROCESS_IO_H_ */

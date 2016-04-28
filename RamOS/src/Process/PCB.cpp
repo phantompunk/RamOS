@@ -8,7 +8,8 @@
 #include "PCB.h"
 #include "Info.h"
 #include "IO.h"
-#include <string>
+#include <iostream>
+//#include <string>
 
 // Initialized static variables
 int PCB::m_id = 0;
@@ -17,14 +18,91 @@ int PCB::m_id = 0;
 PCB::PCB() {
 	m_pid = m_id++;
 }
+PCB::PCB(int cpu, int mem, int io) {
+	m_pid = m_id++;
+	set_cpu_required(cpu);
+	set_memory(mem);
+	set_io_required(io);
+}
+void PCB::set_id(int id) {
+	m_pid = id;
+}
+void PCB::set_memory(int mem) {
+	m_memory = mem;
+}
+void PCB::set_to_new() {
+	m_state = "New";
+}
 void PCB::set_to_ready() {
 	m_state = "Ready";
+}
+void PCB::set_to_run() {
+	m_state = "Run";
+}
+void PCB::set_to_blocked() {
+	m_state = "Blocked";
+}
+void PCB::set_to_exit() {
+	m_state = "Exit";
+}
+void PCB::set_cpu_required(int cpu) {
+	info.m_cpu_required = cpu;
+	info.m_cpu_pending = cpu;
+}
+void PCB::set_cpu_completed(int cpu) {
+	info.m_cpu_completed = cpu;
+}
+void PCB::set_cpu_pending(int cpu){
+	io.m_io_pending = cpu;
+}
+void PCB::set_io_required(int required) {
+	io.m_io_required = required;
+	io.m_io_pending = required;
+}
+void PCB::set_io_completed(int completed) {
+	io.m_io_completed = completed;
+}
+void PCB::set_io_pending(int pending) {
+	io.m_io_pending = pending;
+}
+void PCB::set_io_arrival(int arrive) {
+	io.set_arrival(arrive);
+}
+void PCB::set_io_wait(int wait) {
+	io.set_wait(wait);
 }
 int PCB::get_pid() {
 	return m_pid;
 }
+int PCB::get_memory() {
+	return m_memory;
+}
 std::string PCB::get_state() {
 	return m_state;
+}
+int PCB::get_cpu_required() {
+	return info.m_cpu_required;
+}
+int PCB::get_cpu_completed() {
+	return info.m_cpu_completed;
+}
+int PCB::get_cpu_pending() {
+	return info.m_cpu_pending;
+}
+int PCB::get_io_required() {
+	return this->io.m_io_required;
+}
+int PCB::get_io_completed() {
+	return this->io.m_io_completed;
+}
+int PCB::get_io_pending() {
+	return this->io.m_io_pending;
+}
+int PCB::get_arrival() {
+	return io.get_arrival().front();
+}
+int PCB::get_wait() {
+	return io.get_wait().front();
 }
 PCB::~PCB() {
 	// TODO Auto-generated destructor stub

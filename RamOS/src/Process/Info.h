@@ -10,8 +10,12 @@
 
 class Info {
 private:
-	int m_burst_time;
+
 public:
+	int m_cpu_required;
+	int m_cpu_completed;
+	int m_cpu_pending;
+	int m_cpu_arrival;
 	Info();
 	void start_timer();
 	int get_time();
