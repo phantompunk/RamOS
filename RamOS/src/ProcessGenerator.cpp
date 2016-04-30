@@ -10,16 +10,16 @@
 #include<iostream>
 #include<cstdlib>
 #include<ctime>
-#include<thread>
-#include<chrono>
-#include<ncurses.h>
+//#include<thread> // MOT WORKING ON LINUX
+//#include<chrono>
+//#include<ncurses.h>
 
 int ProcessGenerator::number_IO = 0;
 int ProcessGenerator::cpu_runtime = 0;
 
 ProcessGenerator::ProcessGenerator() {
-	create_file();
-	close_file();
+//	create_file();
+//	close_file();
 
 }
 void ProcessGenerator::set_cpu_time(){
@@ -62,20 +62,17 @@ void ProcessGenerator::create_file(){
 	 number_IO = IO;
  }
 
-
- std::list<int> ProcessGenerator::io_at(int cpu, int IO){
+ void ProcessGenerator::io_at(int cpu, int IO){
 	 int IO_L = cpu/IO;
 	 for(int i=0; i<IO; i++){
-		 std::srand((unsigned)time(0));
+//		 std::srand((unsigned)time(0));
 		 IO_list.push_back(rand()%IO_L);
 
 	 }
-		return IO_list;
-
-
  }
+
  int ProcessGenerator::io_wt(){
-	 std::srand((unsigned)time(0));
+//	 std::srand((unsigned)time(0));
 	 return (rand()%50 + 25);
 	  }
 

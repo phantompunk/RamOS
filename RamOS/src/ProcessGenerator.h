@@ -55,7 +55,7 @@ public:
 	int random_io();
 	int random_runtime();
 	int random_processMemory();
-	std::list<int> io_at(int cpu_runtime, int number_IO);
+	void io_at(int cpu_runtime, int number_IO);
 	int io_wt();
 
 	std::list<int> IO_list; // list of Process IO request times
