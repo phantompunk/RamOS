@@ -100,6 +100,10 @@ void test_scheduler() {
 	cout << sch.get_run_state().get_pid()<<endl;
 };
 
+bool wait_complete(const int& value) {
+	return (value==15);
+};
+
 int main() {
 	// OS startup
 	// Run process generator
@@ -115,16 +119,99 @@ int main() {
 				// Move process accordingly
 
 	Scheduler sch;
-	PCB pcb = PCB(1, 8, 1);
-	PCB pcb2 = PCB(450, 2, 2);
+	PCB pcb,pcb2,pcb3;
+
+	pcb.set_id();
+	pcb2.set_id();
+	pcb3.set_id();
+
+	pcb.set_cpu_arrival(2);
+	pcb2.set_cpu_arrival(40);
+	pcb2.set_cpu_arrival(85);
+
+	pcb.set_cpu_required(200);
+	pcb2.set_cpu_required(150);
+	pcb3.set_cpu_required(255);
+
+	pcb.set_io_required(2);
+	pcb2.set_io_required(0);
+	pcb3.set_io_required(3);
+
+	pcb.set_io_arrival(15);
+	pcb.set_io_arrival(25);
+	pcb3.set_io_arrival(5);
+	pcb3.set_io_arrival(25);
+	pcb3.set_io_arrival(15);
+
+	pcb.set_io_wait(0);
+	pcb.set_io_wait(48);
+	pcb2.set_io_wait(10);
+	pcb3.set_io_wait(28);
+	pcb3.set_io_wait(34);
+	pcb3.set_io_wait(40);
+
+	pcb.set_memory(4);
+	pcb2.set_memory(6);
+	pcb3.set_memory(8);
+
 	cout << "PCB: " << pcb.get_pid()<<endl;
+	cout << "PCB2: " << pcb2.get_pid()<<endl;
+	cout << "PCB: " << pcb.get_cpu_arrival()<<endl;
+
+	cout<<"PCB "<<pcb.get_cpu_pending()<<endl;
+	sch.sm.run_state = pcb;
+	sch.sm.run_state.consume_cpu();
+	cout<<"PCB 1 "<<sch.sm.get_run_state().get_cpu_pending()<<endl;
+
 	sch.sm.new_state.push_back(pcb);
-	sch.admit();
-	cout << "Ram: " << sch.get_ram()<<endl;
+	sch.sm.new_state.push_back(pcb2);
+	sch.sm.new_state.push_back(pcb3);
+	sch.sm.new_state.pop_front();
+
+	iterate_state(sch.get_new_state());
+	sch.sm.new_state.front().io.m_io_wait.remove_if(wait_complete);
+	cout<<"Remove if IO wait is 0"<<endl;
+	iterate_state(sch.get_new_state());
+
+
+
+
+
+
+
+//
+//	list<PCB> null;
+//	sch.sm.null_state.push_back(pcb);
+//	sch.sm.null_state.push_back(pcb2);
+//	iterate_state(null);
+//	while(sch.get_clock() < 1500) {
+//		cout<<"Clock cylce: "<<sch.get_clock()<<endl;
+//		cout<<"Ram: "<<sch.get_ram()<<endl;
+//		cout<<"State: "<<sch.get_ready_state().empty()<<endl;
+//		sch.admit();
+//		sch.allocate();
+//
+////		sch.dispatch();
+//		sch.increase_clock();
+//	}
+//	sch.sm.new_state.push_back(pcb);
+//	sch.sm.new_state.push_back(pcb2);
+//	iterate_state(sch.get_new_state());
+
+//	while(!sch.get_new_state().empty()) {
+//		sch.admit();
+//		sch.increase_clock();
+//	}
+
+
+//	sch.admit();
+//	sch.admit();
+//	iterate_state(sch.get_ready_state());
+//	cout << "Ram: " << sch.get_ram()<<endl;
 //	sch.display_ram();
-	sch.dispatch();
-	sch.dispatch();
-	cout << "RUN PID: " << sch.get_run_state().get_pid()<<endl;
-	cout<<" RunTime: " << sch.get_runtime()<<endl;
-//	iterate_state(sch.get_exit_state());
+//	sch.dispatch();
+//	sch.dispatch();
+//	cout << "RUN PID: " << sch.get_run_state().get_pid()<<endl;
+//	cout<<" RunTime: " << sch.get_runtime()<<endl;
+
 }

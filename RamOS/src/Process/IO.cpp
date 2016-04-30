@@ -17,10 +17,10 @@ void IO::set_arrival(int arrive) {
 void IO::set_wait(int wait) {
 	m_io_wait.push_back(wait);
 }
-std::list<int> IO::get_arrival() {
+std::list<int> IO::get_arrival_list() {
 	return m_io_arrival;
 }
-std::list<int> IO::get_wait() {
+std::list<int> IO::get_wait_list() {
 	return m_io_wait;
 }
 IO::~IO() {

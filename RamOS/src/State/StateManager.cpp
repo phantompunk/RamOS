@@ -11,6 +11,9 @@ StateManager::StateManager() {
 	// TODO Auto-generated constructor stub
 
 }
+std::list<PCB> StateManager::get_null_state() {
+	return null_state;
+}
 std::list<PCB> StateManager::get_new_state() {
 	return new_state;
 }
@@ -30,9 +33,16 @@ PCB StateManager::get_run_state() {
 ////	return running;
 //}
 void StateManager::clear_run() {
-	run_state.set_id(0);
+	run_state.clear_id();
 	run_state.set_cpu_required(0);
 	run_state.set_memory(0);
+}
+void StateManager::null_to_new() {
+	PCB temp = null_state.front();
+	temp.set_to_new();
+	temp.set_id();
+	new_state.push_back(temp);
+	null_state.pop_front();
 }
 void StateManager::new_to_ready() {
 	PCB temp = new_state.front();
