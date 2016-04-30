@@ -10,6 +10,7 @@
 
 #include "Info.h"
 #include "IO.h"
+#include <list>
 //#include "Scheduler.h"
 
 #include <string>
@@ -26,8 +27,9 @@ public:
 	Info info;
 	IO io;
 
-	void set_id(int id);		// Set process id - only used to clear run
-	void set_cpu_arrival(); 	// Set when the process the arrives
+	void set_id();		// Set unique id when process moves to new
+	void clear_id();	// Set id to 0 - used to clear run state
+	void set_cpu_arrival(int time); // Set when the process the arrives
 	void set_cpu_required(int cpu);	// Set amount of cycles required
 	void set_cpu_completed(int cpu);// Set amount of completed cpu cycles
 	void set_cpu_pending(int cpu);	// Set amount of cycles remaining
@@ -36,6 +38,8 @@ public:
 	void set_io_pending(int io);	// Set amount of IOs remaining
 	void set_io_arrival(int arrive);// Push arrival time to end of list
 	void set_io_wait(int wait);		// Push wait time to end of list
+	void consume_cpu();				// Decrease cpu pending by 1 cycle
+	void consume_io();				// Decrease front wait time by 1 cycle
 	void set_memory(int mem);		// Set required memory
 	void set_to_null();		// Set state flag to null
 	void set_to_new();		// Set state flag to new

@@ -19,6 +19,7 @@ private:
 	const static int run_size = 1;
 public:
 	StateManager();
+	std::list<PCB> null_state;		// List of all incoming PCBs
 	std::list<PCB> new_state;		// List of objects in new state
 	std::list<PCB> ready_state;		// List of objects in ready state
 	std::list<PCB> blocked_state;	// List of objects in blocked state
@@ -26,6 +27,7 @@ public:
 	PCB run_state;					// Object in run state
 //	PCB running[run_size];
 
+	std::list<PCB> get_null_state();	// Return null state list
 	std::list<PCB> get_new_state(); 	// Return new state list
 	std::list<PCB> get_ready_state();	// Return ready state list
 	std::list<PCB> get_blocked_state();	// Return blocked state list
@@ -33,7 +35,7 @@ public:
 	PCB get_run_state();				// Return run state
 //	PCB get_running();
 	void clear_run();		// Set PCB in run state to an empty object
-//	void null_to_new();
+	void null_to_new();		// Move first pcb from null to back of new
 	void new_to_ready();	// Move first pcb from new to back of ready
 	void ready_to_run();	// Move first pcb from ready to run state
 //	void ready_to_running();
