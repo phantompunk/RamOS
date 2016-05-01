@@ -47,6 +47,7 @@ public:
 	int get_IO();
 	void set_IO(int IO);
 	int cpu_time;
+	int processArrivalTime();
 	void set_io_request(); // method to create io request
 	void set_cpu_time(); //method to create random total of process time needed
 	void create_file(); //writes file
@@ -56,9 +57,10 @@ public:
 	int random_runtime();
 	int random_processMemory();
 	void io_at(int cpu_runtime, int number_IO);
-	int io_wt();
+	void io_wt(int number_10);
 
-	std::list<int> IO_list; // list of Process IO request times
+	std::list<int> ioArrivalTime_list; // list of Process IO request times
+	std::list<int> waitTime_list; // list of wait times; given IO request
 
 
 	ProcessGenerator();
