@@ -10,7 +10,7 @@
 #include <fstream>
 #include <sstream>
 #include <string>
-#include <regex>
+//#include <regex>
 #include <list>
 using namespace std;
 //added
