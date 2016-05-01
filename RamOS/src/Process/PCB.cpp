@@ -24,6 +24,8 @@ PCB::PCB() {
 	set_memory(0);
 	set_io_required(0);
 	set_io_required(0);
+	set_to_null();
+	m_running = false;
 }
 PCB::PCB(int cpu, int mem, int io) {
 	m_pid = m_id++;
@@ -32,10 +34,13 @@ PCB::PCB(int cpu, int mem, int io) {
 	set_io_required(io);
 }
 void PCB::set_id() {
-	m_pid = m_id++;
+	m_pid = ++m_id;
 }
 void PCB::clear_id() {
 	m_pid = 0;
+}
+void PCB::toggle_run() {
+	m_running = !m_running;
 }
 void PCB::set_memory(int mem) {
 	m_memory = mem;
@@ -58,12 +63,15 @@ void PCB::set_to_ready() {
 }
 void PCB::set_to_run() {
 	m_state = "Run";
+	toggle_run();
 }
 void PCB::set_to_blocked() {
 	m_state = "Blocked";
+	toggle_run();
 }
 void PCB::set_to_exit() {
 	m_state = "Exit";
+	toggle_run();
 }
 void PCB::set_cpu_arrival(int time) {
 	info.m_cpu_arrival = time;
@@ -129,6 +137,9 @@ int PCB::get_arrival() {
 }
 int PCB::get_wait() {
 	return io.get_wait_list().front();
+}
+bool PCB::is_running() {
+	return m_running;
 }
 PCB::~PCB() {
 	// TODO Auto-generated destructor stub

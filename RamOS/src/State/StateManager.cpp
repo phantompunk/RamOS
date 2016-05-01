@@ -20,6 +20,9 @@ std::list<PCB> StateManager::get_new_state() {
 std::list<PCB> StateManager::get_ready_state() {
 	return ready_state;
 }
+std::list<PCB> StateManager::get_runn_state() {
+
+}
 std::list<PCB> StateManager::get_blocked_state() {
 	return blocked_state;
 }
@@ -36,6 +39,8 @@ void StateManager::clear_run() {
 	run_state.clear_id();
 	run_state.set_cpu_required(0);
 	run_state.set_memory(0);
+	run_state.set_to_null();
+	run_state.m_running = false;
 }
 void StateManager::null_to_new() {
 	PCB temp = null_state.front();
@@ -67,6 +72,7 @@ void StateManager::run_to_blocked() {
 	PCB temp = run_state;
 	temp.set_to_blocked();
 	blocked_state.push_back(temp);
+	clear_run();
 //	temp.~PCB();
 }
 void StateManager::run_to_exit() {
@@ -79,11 +85,15 @@ void StateManager::run_to_ready() {
 	PCB temp = run_state;
 	temp.set_to_ready();
 	ready_state.push_back(temp);
+	clear_run();
 }
-void StateManager::blocked_to_ready(){
-	PCB temp = blocked_state.front();
+void StateManager::blocked_to_ready(PCB pcb){
+	PCB temp = pcb;
 	temp.set_to_ready();
 	ready_state.push_back(temp);
+}
+bool StateManager::is_running() {
+	return run_state.m_running;
 }
 StateManager::~StateManager() {
 	// TODO Auto-generated destructor stub

@@ -23,6 +23,9 @@ using namespace std;
 void iterate_state(list<PCB> state) {
 	for (list<PCB>::iterator it = state.begin();
 			 it != state.end(); it++) {
+		if ((*it).get_pid() == 0)
+			cout << "Process RAM: " << (*it).get_memory()<<endl;
+		else
 			cout << "Process ID: " << (*it).get_pid() << endl;
 		}
 }
@@ -100,12 +103,33 @@ void test_scheduler() {
 	sch.terminate();
 	cout << sch.get_run_state().get_pid()<<endl;
 };
-
+bool id_done(const PCB& pcb) {
+	if (pcb.io.m_io_pending == 0)
+		return true;
+}
 bool wait_complete(const int& value) {
 	return (value==15);
 };
 
+
+bool x;
+void toggle() {
+	 x = !x;
+//	if (x == false)
+//		x = true;
+//	else
+//		x = false;
+};
+
 int main() {
+
+	ProcessGenerator pgen;
+
+	pgen.io_at(100,5);
+	for (list<int>::iterator it = pgen.ioArrivalTime_list.begin();
+		 pgen.ioArrivalTime_list.end(); it++) {
+		cout << (*it)<<endl;
+	}
 	// OS startup
 	// Run process generator
 	// Read from input file
@@ -119,77 +143,134 @@ int main() {
 			// Execute process until a timeslice ends, IO occurs, or ends
 				// Move process accordingly
 
-//	Scheduler sch;
-//	PCB pcb,pcb2,pcb3;
-//
+//	x = false;
+//	toggle();
+//	cout<<x<<endl;
+//	toggle();
+//	cout<<x<<endl;
+//	if (!x) {
+//		cout<<"Not on"<<endl;
+//		cout<<x<<endl;
+//	}
+	Scheduler sch;
+	PCB pcb,pcb2,pcb3,pcb4,pcb5;
+
 //	pcb.set_id();
 //	pcb2.set_id();
 //	pcb3.set_id();
-//
-//	pcb.set_cpu_arrival(2);
-//	pcb2.set_cpu_arrival(40);
-//	pcb2.set_cpu_arrival(85);
-//
-//	pcb.set_cpu_required(200);
-//	pcb2.set_cpu_required(150);
-//	pcb3.set_cpu_required(255);
-//
-//	pcb.set_io_required(2);
-//	pcb2.set_io_required(0);
-//	pcb3.set_io_required(3);
-//
-//	pcb.set_io_arrival(15);
-//	pcb.set_io_arrival(25);
-//	pcb3.set_io_arrival(5);
-//	pcb3.set_io_arrival(25);
-//	pcb3.set_io_arrival(15);
-//
-//	pcb.set_io_wait(0);
-//	pcb.set_io_wait(48);
-//	pcb2.set_io_wait(10);
-//	pcb3.set_io_wait(28);
-//	pcb3.set_io_wait(34);
-//	pcb3.set_io_wait(40);
-//
-//	pcb.set_memory(4);
-//	pcb2.set_memory(6);
-//	pcb3.set_memory(8);
-//
+
+	pcb.set_cpu_arrival(0);
+	pcb2.set_cpu_arrival(3);
+	pcb3.set_cpu_arrival(6);
+	pcb4.set_cpu_arrival(8);
+	pcb5.set_cpu_arrival(12);
+
+	pcb.set_cpu_required(5);
+	pcb2.set_cpu_required(6);
+	pcb3.set_cpu_required(4);
+	pcb4.set_cpu_required(3);
+	pcb5.set_cpu_required(15);
+
+	pcb.set_io_required(2);
+	pcb2.set_io_required(0);
+	pcb3.set_io_required(3);
+	pcb4.set_io_required(5);
+	pcb5.set_io_required(3);
+
+	pcb.set_io_arrival(1);
+	pcb.set_io_arrival(3);
+	pcb3.set_io_arrival(1);
+	pcb3.set_io_arrival(3);
+	pcb3.set_io_arrival(2);
+	pcb4.set_io_arrival(4);
+	pcb4.set_io_arrival(2);
+	pcb4.set_io_arrival(5);
+	pcb4.set_io_arrival(4);
+	pcb4.set_io_arrival(3);
+	pcb5.set_io_arrival(2);
+	pcb5.set_io_arrival(4);
+	pcb5.set_io_arrival(5);
+
+	pcb.set_io_wait(5);
+	pcb.set_io_wait(1);
+	pcb3.set_io_wait(2);
+	pcb3.set_io_wait(4);
+	pcb3.set_io_wait(2);
+	pcb4.set_io_wait(2);
+	pcb4.set_io_wait(3);
+	pcb4.set_io_wait(4);
+	pcb4.set_io_wait(2);
+	pcb4.set_io_wait(2);
+	pcb5.set_io_wait(4);
+	pcb5.set_io_wait(3);
+	pcb5.set_io_wait(1);
+
+	pcb.set_memory(4);
+	pcb2.set_memory(6);
+	pcb3.set_memory(8);
+	pcb4.set_memory(12);
+	pcb5.set_memory(6);
+
+	sch.sm.null_state.push_back(pcb);
+	sch.sm.null_state.push_back(pcb2);
+	sch.sm.null_state.push_back(pcb3);
+	sch.sm.null_state.push_back(pcb4);
+	sch.sm.null_state.push_back(pcb5);
+	iterate_state(sch.sm.null_state);
+
+	int end = sch.sm.null_state.size();
+	cout<<"End: "<<end<<endl;
+	bool is_processing = true;
+//	cout << "True is " << true<<endl;
+//	cout << "Init Run State: "<< sch.sm.run_state.get_state().compare("Run")<<endl;
+//	cout << "Init Run ID: "<< sch.sm.run_state.get_pid()<<endl;
+// WORKING FOR LOOP
+//	for (sch.get_clock(); sch.get_clock() < 25; sch.increase_clock()) {
+	while(is_processing) {
+		sch.admit();
+		sch.allocate();
+		sch.dispatch();
+		if(!sch.get_exit_state().empty() && sch.get_exit_state().size()==end) {
+			cout<<"Finished"<<endl;
+			is_processing = false;
+		}
+		sch.increase_clock();
+//		iterate_state(sch.get_new_state());
+	}
+
 //	cout << "PCB: " << pcb.get_pid()<<endl;
 //	cout << "PCB2: " << pcb2.get_pid()<<endl;
 //	cout << "PCB: " << pcb.get_cpu_arrival()<<endl;
-//
+
 //	cout<<"PCB "<<pcb.get_cpu_pending()<<endl;
 //	sch.sm.run_state = pcb;
 //	sch.sm.run_state.consume_cpu();
 //	cout<<"PCB 1 "<<sch.sm.get_run_state().get_cpu_pending()<<endl;
-//
-//	sch.sm.new_state.push_back(pcb);
-//	sch.sm.new_state.push_back(pcb2);
-//	sch.sm.new_state.push_back(pcb3);
+//	cout<<"IO PCB1"<<endl;
+//	cout<<pcb.get_wait()<<endl;
+//	pcb.consume_io();
+//	cout<<pcb.get_wait()<<endl;
+
+
+//	sch.sm.blocked_state.push_back(pcb);
+//	sch.sm.blocked_state.push_back(pcb2);
+//	sch.sm.blocked_state.push_back(pcb3);
 //	sch.sm.new_state.pop_front();
+
+//	iterate_state(sch.get_blocked_state());
+//	for (list<PCB>::iterator it = sch.sm.blocked_state.begin();
+//		 it != sch.sm.blocked_state.end(); it++) {
+//		if ((*it).get_wait() == 0)
+//			it = sch.sm.blocked_state.erase(it);
 //
-//	iterate_state(sch.get_new_state());
+//	}
 //	sch.sm.new_state.front().io.m_io_wait.remove_if(wait_complete);
+//	sch.sm.new_state.remove(is_done);
 //	cout<<"Remove if IO wait is 0"<<endl;
-//	iterate_state(sch.get_new_state());
-
-
-	ProcessGenerator pgen;
-
-	srand(time(0));
-	pgen.io_at(100,5);
-	pgen.IO_list;
-	for (list<int>::iterator it = pgen.IO_list.begin();
-		 it !=pgen.IO_list.end();it++){
-		cout<<(*it)<<endl;
-	}
+//	iterate_state(sch.get_blocked_state());
 
 
 
-
-
-//
 //	list<PCB> null;
 //	sch.sm.null_state.push_back(pcb);
 //	sch.sm.null_state.push_back(pcb2);
@@ -224,4 +305,14 @@ int main() {
 //	cout << "RUN PID: " << sch.get_run_state().get_pid()<<endl;
 //	cout<<" RunTime: " << sch.get_runtime()<<endl;
 
+
+	// State
+//	ProcessGenerator pgen;
+//
+//	srand(time(0));
+//	pgen.io_at(100,5);
+//	for (list<int>::iterator it = pgen.IO_list.begin();
+//		 it !=pgen.IO_list.end();it++){
+//		cout<<(*it)<<endl;
+//	}
 }

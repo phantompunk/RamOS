@@ -22,6 +22,7 @@ private:
 	int m_memory;			// Memory stuff
 	std::string m_state;	// State PCB is currently in
 public:
+	bool m_running;
 	PCB();
 	PCB(int cpu,int mem,int io);
 	Info info;
@@ -47,6 +48,7 @@ public:
 	void set_to_run();		// Set state flag to run
 	void set_to_blocked();	// Set state flag to blocked
 	void set_to_exit();		// Set state flag to exit
+	void toggle_run();
 
 	int get_pid();			// Return unique process id
 	int get_memory();		// Return required memory
@@ -60,6 +62,7 @@ public:
 	int get_io_pending();	// Return IOs still remaining
 	int get_arrival();		// Return first arrival time if not null
 	int get_wait();			// Return first wait time if not null
+	bool is_running();		// True if process is currently running
 	virtual ~PCB();
 
 	const Info& getInfo() const {
