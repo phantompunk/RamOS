@@ -40,6 +40,7 @@
 							<tool id="cdt.managedbuild.tool.gnu.assembler.base.165191900" name="GCC Assembler" superClass="cdt.managedbuild.tool.gnu.assembler.base">
 								<option id="gnu.both.asm.option.include.paths.896084581" name="Include paths (-I)" superClass="gnu.both.asm.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/RamOS/src/State}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/RamOS/src/Process}&quot;"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.1122884454" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
 							</tool>
@@ -104,9 +105,22 @@
 	<storageModule moduleId="cdtBuildSystem" version="4.0.0">
 		<project id="RamOS.cdt.managedbuild.target.gnu.cross.exe.1517792433" name="Executable" projectType="cdt.managedbuild.target.gnu.cross.exe"/>
 	</storageModule>
+	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
+	<storageModule moduleId="refreshScope" versionNumber="2">
+		<configuration configurationName="Debug">
+			<resource resourceType="PROJECT" workspacePath="/RamOS"/>
+		</configuration>
+		<configuration configurationName="Release">
+			<resource resourceType="PROJECT" workspacePath="/RamOS"/>
+		</configuration>
+	</storageModule>
+	<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
 	<storageModule moduleId="scannerConfiguration">
 		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
 		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.cross.exe.release.2096155990;cdt.managedbuild.config.gnu.cross.exe.release.2096155990.;cdt.managedbuild.tool.gnu.cross.cpp.compiler.1508084787;cdt.managedbuild.tool.gnu.cpp.compiler.input.1928831043">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.cross.exe.debug.236528076;cdt.managedbuild.config.gnu.cross.exe.debug.236528076.;cdt.managedbuild.tool.gnu.c.compiler.base.449665401;cdt.managedbuild.tool.gnu.c.compiler.input.1019561888">
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
 		</scannerConfigBuildInfo>
 		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.cross.exe.debug.236528076;cdt.managedbuild.config.gnu.cross.exe.debug.236528076.;cdt.managedbuild.tool.gnu.cross.cpp.compiler.554571592;cdt.managedbuild.tool.gnu.cpp.compiler.input.1191628112">
@@ -118,15 +132,8 @@
 		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.cross.exe.release.2096155990;cdt.managedbuild.config.gnu.cross.exe.release.2096155990.;cdt.managedbuild.tool.gnu.cross.c.compiler.2112009615;cdt.managedbuild.tool.gnu.c.compiler.input.1187703786">
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
 		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.cross.exe.debug.236528076;cdt.managedbuild.config.gnu.cross.exe.debug.236528076.;cdt.managedbuild.tool.gnu.cpp.compiler.base.1927426693;cdt.managedbuild.tool.gnu.cpp.compiler.input.131888083">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		</scannerConfigBuildInfo>
 	</storageModule>
-	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
-	<storageModule moduleId="refreshScope" versionNumber="2">
-		<configuration configurationName="Debug">
-			<resource resourceType="PROJECT" workspacePath="/RamOS"/>
-		</configuration>
-		<configuration configurationName="Release">
-			<resource resourceType="PROJECT" workspacePath="/RamOS"/>
-		</configuration>
-	</storageModule>
-	<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
 </cproject>

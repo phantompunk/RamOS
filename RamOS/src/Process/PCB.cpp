@@ -27,11 +27,13 @@ PCB::PCB() {
 	set_to_null();
 	m_running = false;
 }
-PCB::PCB(int cpu, int mem, int io) {
+PCB::PCB(int cpu, int mem, int io_r, std::list<int> arrival,std::list<int> wait) {
 	m_pid = m_id++;
 	set_cpu_required(cpu);
 	set_memory(mem);
-	set_io_required(io);
+	set_io_required(io_r);
+	io.m_io_arrival.merge(arrival);
+	io.m_io_wait.merge(wait);
 }
 void PCB::set_id() {
 	m_pid = ++m_id;

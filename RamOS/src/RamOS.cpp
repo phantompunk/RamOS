@@ -13,6 +13,7 @@
 #include <fstream>
 #include <iostream>
 #include "ProcessGenerator.h"
+#include "InputReader.h"
 //#include <chrono>
 //#include "State/StateManager.h"
 //#include "Process/PCB.h"
@@ -127,9 +128,14 @@ int main() {
 
 	pgen.io_at(100,5);
 	for (list<int>::iterator it = pgen.ioArrivalTime_list.begin();
-		 pgen.ioArrivalTime_list.end(); it++) {
+		 it != pgen.ioArrivalTime_list.end(); it++) {
 		cout << (*it)<<endl;
 	}
+
+	InputReader reader;
+
+	reader.parseInput("");
+
 	// OS startup
 	// Run process generator
 	// Read from input file
@@ -153,69 +159,77 @@ int main() {
 //		cout<<x<<endl;
 //	}
 	Scheduler sch;
-	PCB pcb,pcb2,pcb3,pcb4,pcb5;
+//	while (!reader.nullList.empty()) {
+//		sch.sm.null_state.merge(reader.nullList);
+//	}
+
+	for (list<PCB>::iterator it = reader.nullList.begin();
+		 it != reader.nullList.end(); it++) {
+		sch.sm.null_state.push_back((*it));
+	}
+//	PCB pcb,pcb2,pcb3,pcb4,pcb5;
 
 //	pcb.set_id();
 //	pcb2.set_id();
 //	pcb3.set_id();
 
-	pcb.set_cpu_arrival(0);
-	pcb2.set_cpu_arrival(3);
-	pcb3.set_cpu_arrival(6);
-	pcb4.set_cpu_arrival(8);
-	pcb5.set_cpu_arrival(12);
+//	pcb.set_cpu_arrival(0);
+//	pcb2.set_cpu_arrival(3);
+//	pcb3.set_cpu_arrival(6);
+//	pcb4.set_cpu_arrival(8);
+//	pcb5.set_cpu_arrival(12);
+//
+//	pcb.set_cpu_required(5);
+//	pcb2.set_cpu_required(6);
+//	pcb3.set_cpu_required(4);
+//	pcb4.set_cpu_required(3);
+//	pcb5.set_cpu_required(15);
+//
+//	pcb.set_io_required(2);
+//	pcb2.set_io_required(0);
+//	pcb3.set_io_required(3);
+//	pcb4.set_io_required(5);
+//	pcb5.set_io_required(3);
+//
+//	pcb.set_io_arrival(1);
+//	pcb.set_io_arrival(3);
+//	pcb3.set_io_arrival(1);
+//	pcb3.set_io_arrival(3);
+//	pcb3.set_io_arrival(2);
+//	pcb4.set_io_arrival(4);
+//	pcb4.set_io_arrival(2);
+//	pcb4.set_io_arrival(5);
+//	pcb4.set_io_arrival(4);
+//	pcb4.set_io_arrival(3);
+//	pcb5.set_io_arrival(2);
+//	pcb5.set_io_arrival(4);
+//	pcb5.set_io_arrival(5);
+//
+//	pcb.set_io_wait(5);
+//	pcb.set_io_wait(1);
+//	pcb3.set_io_wait(2);
+//	pcb3.set_io_wait(4);
+//	pcb3.set_io_wait(2);
+//	pcb4.set_io_wait(2);
+//	pcb4.set_io_wait(3);
+//	pcb4.set_io_wait(4);
+//	pcb4.set_io_wait(2);
+//	pcb4.set_io_wait(2);
+//	pcb5.set_io_wait(4);
+//	pcb5.set_io_wait(3);
+//	pcb5.set_io_wait(1);
+//
+//	pcb.set_memory(4);
+//	pcb2.set_memory(6);
+//	pcb3.set_memory(8);
+//	pcb4.set_memory(12);
+//	pcb5.set_memory(6);
 
-	pcb.set_cpu_required(5);
-	pcb2.set_cpu_required(6);
-	pcb3.set_cpu_required(4);
-	pcb4.set_cpu_required(3);
-	pcb5.set_cpu_required(15);
-
-	pcb.set_io_required(2);
-	pcb2.set_io_required(0);
-	pcb3.set_io_required(3);
-	pcb4.set_io_required(5);
-	pcb5.set_io_required(3);
-
-	pcb.set_io_arrival(1);
-	pcb.set_io_arrival(3);
-	pcb3.set_io_arrival(1);
-	pcb3.set_io_arrival(3);
-	pcb3.set_io_arrival(2);
-	pcb4.set_io_arrival(4);
-	pcb4.set_io_arrival(2);
-	pcb4.set_io_arrival(5);
-	pcb4.set_io_arrival(4);
-	pcb4.set_io_arrival(3);
-	pcb5.set_io_arrival(2);
-	pcb5.set_io_arrival(4);
-	pcb5.set_io_arrival(5);
-
-	pcb.set_io_wait(5);
-	pcb.set_io_wait(1);
-	pcb3.set_io_wait(2);
-	pcb3.set_io_wait(4);
-	pcb3.set_io_wait(2);
-	pcb4.set_io_wait(2);
-	pcb4.set_io_wait(3);
-	pcb4.set_io_wait(4);
-	pcb4.set_io_wait(2);
-	pcb4.set_io_wait(2);
-	pcb5.set_io_wait(4);
-	pcb5.set_io_wait(3);
-	pcb5.set_io_wait(1);
-
-	pcb.set_memory(4);
-	pcb2.set_memory(6);
-	pcb3.set_memory(8);
-	pcb4.set_memory(12);
-	pcb5.set_memory(6);
-
-	sch.sm.null_state.push_back(pcb);
-	sch.sm.null_state.push_back(pcb2);
-	sch.sm.null_state.push_back(pcb3);
-	sch.sm.null_state.push_back(pcb4);
-	sch.sm.null_state.push_back(pcb5);
+//	sch.sm.null_state.push_back(pcb);
+//	sch.sm.null_state.push_back(pcb2);
+//	sch.sm.null_state.push_back(pcb3);
+//	sch.sm.null_state.push_back(pcb4);
+//	sch.sm.null_state.push_back(pcb5);
 	iterate_state(sch.sm.null_state);
 
 	int end = sch.sm.null_state.size();

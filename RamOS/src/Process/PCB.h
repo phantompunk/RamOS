@@ -24,7 +24,7 @@ private:
 public:
 	bool m_running;
 	PCB();
-	PCB(int cpu,int mem,int io);
+	PCB(int cpu,int mem,int io,std::list<int>,std::list<int>);
 	Info info;
 	IO io;
 
