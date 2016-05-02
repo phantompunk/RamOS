@@ -27,13 +27,18 @@ PCB::PCB() {
 	set_to_null();
 	m_running = false;
 }
-PCB::PCB(int cpu, int mem, int io_r, std::list<int> arrival,std::list<int> wait) {
-	m_pid = m_id++;
+PCB::PCB(int cpu, int cpuA,int mem, int io_r, std::list<int> arrival,std::list<int> wait) {
+//	m_pid = m_id++;
+	clear_id();
 	set_cpu_required(cpu);
+	set_cpu_arrival(cpuA);
+	set_cpu_completed(0);
 	set_memory(mem);
 	set_io_required(io_r);
 	io.m_io_arrival.merge(arrival);
 	io.m_io_wait.merge(wait);
+	m_running = false;
+	set_to_null();
 }
 void PCB::set_id() {
 	m_pid = ++m_id;
@@ -62,6 +67,7 @@ void PCB::set_to_new() {
 }
 void PCB::set_to_ready() {
 	m_state = "Ready";
+	toggle_run();
 }
 void PCB::set_to_run() {
 	m_state = "Run";

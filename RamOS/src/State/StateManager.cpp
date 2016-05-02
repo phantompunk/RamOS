@@ -38,6 +38,10 @@ PCB StateManager::get_run_state() {
 void StateManager::clear_run() {
 	run_state.clear_id();
 	run_state.set_cpu_required(0);
+	run_state.set_cpu_completed(0);
+	run_state.set_cpu_pending(0);
+	run_state.io.m_io_arrival.clear();
+	run_state.io.m_io_wait.clear();
 	run_state.set_memory(0);
 	run_state.set_to_null();
 	run_state.m_running = false;

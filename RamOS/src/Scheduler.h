@@ -10,6 +10,7 @@
 
 //#include <time.h>
 #include <list>
+#include <string>
 //#include <array>
 
 #include "State/StateManager.h"
@@ -40,6 +41,7 @@ public:
 	void clear_ram(int id);				// Deallocate process memory
 	void increase_clock();				// Increment clock cycle
 	void display_ram();					// Iterate through Ram array
+	void display();
 	StateManager get_state_manager();
 	std::list<PCB> get_null_state();		// Return container for all incoming PCBs
 	std::list<PCB> get_new_state();		// Return new state list
@@ -51,6 +53,8 @@ public:
 	double get_runtime();
 	int get_ram();			// Return current amount of free ram
 	int get_clock();		// Return current clock cycle
+	std::string ram_string();
+	void iterate(std::list<PCB> x);
 	virtual ~Scheduler();
 
 	const StateManager& getSm() const {
