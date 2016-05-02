@@ -11,6 +11,7 @@
 #include <sstream>
 #include <string>
 #include "Scheduler.h"
+#include "Process/PCB.h"
 #include <list>
 
 
@@ -68,7 +69,7 @@ void InputReader::parseInput(string fileName){
 
 	/* use these inputs to pass along to a or create a PCB object here */
 
-	PCB x = PCB(CPURequired,Process_Mem,IO_Requests,IO_AT,IO_WAIT);
+	PCB x = PCB(CPURequired,CPUArrivalTime,Process_Mem,IO_Requests,IO_AT,IO_WAIT);
 	nullList.push_back(x);
 
 	}
