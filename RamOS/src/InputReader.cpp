@@ -128,6 +128,7 @@ string InputReader::setnextInput(string input, char regex){
 	string nextInput;
 	nextInput = input.substr(input.find_first_of(regex)+1,input.length());
 	return nextInput;
+
 }
 
 
