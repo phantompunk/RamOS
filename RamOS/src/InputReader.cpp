@@ -27,7 +27,6 @@ InputReader::~InputReader() {
 
 void InputReader::parseInput(string fileName){
 	/*This method handles the main logic of reading the inputs from the generated file, then using those inputs to create a list of PCB objects*/
-	std::cout<<"Parsing"<<std::endl;
 	string cleanInput;		//variable to hold a clean copy of the input line in case an original is needed
 	string workingInput;	//variable to hold a copy of the input line that the program can manipulate while parsing the string
 	string temp;
@@ -39,7 +38,6 @@ void InputReader::parseInput(string fileName){
 
 	while(!myfile.eof()) {
 	 getline(myfile,workingInput);							//reads in the next line of the file which is expected to be a string of integer values seperated by " "
-	 std::cout<<"contains: "<<workingInput<<std::endl;
 	 cleanInput = workingInput;								 //saves a copy of the original string before any string manipulation
 
 	int CPURequired,CPUArrivalTime, Process_Mem, IO_Requests;  //variables we expect to be inputed and that will be passed along to PCB
@@ -47,11 +45,9 @@ void InputReader::parseInput(string fileName){
 	std::list<int> IO_WAIT;
 
 	CPURequired = getnextInput(workingInput, regex);		//calls getNextInput to return the first integer in the input string
-	std::cout<<"CPUR: "<<CPURequired<<std::endl;
 	workingInput = setnextInput(workingInput,regex);		//passes the input string to setnextInput which returns a substring containing the remaining values that need to be input
 
 	CPUArrivalTime = getnextInput(workingInput, regex);		//calls getNextInput to return the first integer in the input string
-	std::cout<<"CPUA: "<<CPUArrivalTime<<std::endl;
 	workingInput = setnextInput(workingInput,regex);		//passes the input string to setnextInput which returns a substring containing the remaining values that need to be input
 
 	Process_Mem = getnextInput(workingInput, regex);		//same
@@ -75,9 +71,7 @@ void InputReader::parseInput(string fileName){
 	PCB x = PCB(CPURequired,Process_Mem,IO_Requests,IO_AT,IO_WAIT);
 	nullList.push_back(x);
 
-	std::cout<<"MEM:"<<x.get_memory()<<std::endl;
 	}
-	std::cout<<"End of file"<<std::endl;
 }
 
 int InputReader::getnextInput(string input, char regex){
@@ -99,9 +93,7 @@ bool InputReader::isValidFileName(string fileName){
 	whether it is or not */
 
 
-	std::cout<<"checking file name"<<std::endl;
 	int end = fileName.length();
-	std::cout<<"file length: "<<std::endl;
 	if(fileName.substr(end-4,end)==".txt"){
 		return true;
 	} else return false;
