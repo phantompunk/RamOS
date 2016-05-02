@@ -17,7 +17,7 @@
 //added
 InputReader::InputReader() {
 	// TODO Auto-generated constructor stub
-	std::cout<<"Reader Created"<<std::endl;
+//	std::cout<<"Reader Created"<<std::endl;
 
 }
 
@@ -27,7 +27,7 @@ InputReader::~InputReader() {
 
 
 void InputReader::parseInput(string fileName){
-	std::cout<<"Parsing"<<std::endl;
+//	std::cout<<"Parsing"<<std::endl;
 	string cleanInput;
 	string workingInput;
 	string temp;
@@ -38,7 +38,7 @@ void InputReader::parseInput(string fileName){
 	while(!myfile.eof()) {
 //	 workingInput = getInput(myfile);
 	 getline(myfile,workingInput);
-	 std::cout<<"contains: "<<workingInput<<std::endl;
+//	 std::cout<<"contains: "<<workingInput<<std::endl;
 	 cleanInput = workingInput;								//gets string containing input file inputs to perform operations on
 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 //clean input to incase an unaltered input was needed to be referenced and working to actually perform operations on
 
@@ -47,10 +47,10 @@ void InputReader::parseInput(string fileName){
 	std::list<int> IO_WAIT;
 
 	CPURequired = getnextInput(workingInput, regex);
-	std::cout<<"CPUR: "<<CPURequired<<std::endl;
+//	std::cout<<"CPUR: "<<CPURequired<<std::endl;
 	workingInput = setnextInput(workingInput,regex);
 	CPUArrivalTime = getnextInput(workingInput, regex);
-	std::cout<<"CPUA: "<<CPUArrivalTime<<std::endl;
+//	std::cout<<"CPUA: "<<CPUArrivalTime<<std::endl;
 	workingInput = setnextInput(workingInput,regex);
 	Process_Mem = getnextInput(workingInput, regex);
 	workingInput = setnextInput(workingInput,regex);
@@ -65,12 +65,12 @@ void InputReader::parseInput(string fileName){
 	}
 	/* use these inputs to pass along to a or create a PCB object here */
 
-	PCB x = PCB(CPURequired,Process_Mem,IO_Requests,IO_AT,IO_WAIT);
+	PCB x = PCB(CPURequired,CPUArrivalTime,Process_Mem,IO_Requests,IO_AT,IO_WAIT);
 	nullList.push_back(x);
 
-	std::cout<<"MEM:"<<x.get_memory()<<std::endl;
+//	std::cout<<"MEM:"<<x.get_memory()<<std::endl;
 	}
-	std::cout<<"End of file"<<std::endl;
+//	std::cout<<"End of file"<<std::endl;
 }
 
 int InputReader::getnextInput(string input, char regex){
@@ -84,9 +84,9 @@ int InputReader::getnextInput(string input, char regex){
 
 bool InputReader::isValidFileName(string fileName){
 	//Checks to see if the input file is a text file
-	std::cout<<"checking file name"<<std::endl;
+//	std::cout<<"checking file name"<<std::endl;
 	int end = fileName.length();
-	std::cout<<"file length: "<<std::endl;
+//	std::cout<<"file length: "<<std::endl;
 	if(fileName.substr(end-4,end)==".txt"){
 		return true;
 	} else return false;
