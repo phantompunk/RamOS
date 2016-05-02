@@ -35,6 +35,7 @@ void InputReader::parseInput(string fileName){
 	std::ifstream myfile;
 	myfile.open("GeneratedFile.txt");
 
+
 	while(!myfile.eof()) {
 	 getline(myfile,workingInput);							//reads in the next line of the file which is expected to be a string of integer values seperated by " "
 	 std::cout<<"contains: "<<workingInput<<std::endl;

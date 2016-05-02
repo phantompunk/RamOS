@@ -40,6 +40,7 @@ return 0;
 class ProcessGenerator {
 public:
 	std::string file_name;
+	int IO_L;
 	static int cpu_runtime;
 	int get_cpu();
 	void set_cpu();
@@ -47,7 +48,7 @@ public:
 	int get_IO();
 	void set_IO(int IO);
 	int cpu_time;
-	int processArrivalTime();
+	int processArrivalTime(int x);
 	void set_io_request(); // method to create io request
 	void set_cpu_time(); //method to create random total of process time needed
 	void create_file(); //writes file
