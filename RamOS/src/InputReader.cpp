@@ -11,13 +11,12 @@
 #include <sstream>
 #include <string>
 #include "Scheduler.h"
-//#include <regex>
 #include <list>
-//using namespace std;
-//added
+
+
 InputReader::InputReader() {
 	// TODO Auto-generated constructor stub
-//	std::cout<<"Reader Created"<<std::endl;
+	std::cout<<"Reader Created"<<std::endl;
 
 }
 
@@ -27,53 +26,65 @@ InputReader::~InputReader() {
 
 
 void InputReader::parseInput(string fileName){
-//	std::cout<<"Parsing"<<std::endl;
-	string cleanInput;
-	string workingInput;
+	/*This method handles the main logic of reading the inputs from the generated file, then using those inputs to create a list of PCB objects*/
+	std::cout<<"Parsing"<<std::endl;
+	string cleanInput;		//variable to hold a clean copy of the input line in case an original is needed
+	string workingInput;	//variable to hold a copy of the input line that the program can manipulate while parsing the string
 	string temp;
-	char regex  = ' ';
+	char regex  = ' ';		//this will be the regex used to differentiate between input values
 	std::ifstream myfile;
 	myfile.open("GeneratedFile.txt");
 
+
+
 	while(!myfile.eof()) {
-//	 workingInput = getInput(myfile);
-	 getline(myfile,workingInput);
-//	 std::cout<<"contains: "<<workingInput<<std::endl;
-	 cleanInput = workingInput;								//gets string containing input file inputs to perform operations on
-	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 //clean input to incase an unaltered input was needed to be referenced and working to actually perform operations on
+	 getline(myfile,workingInput);							//reads in the next line of the file which is expected to be a string of integer values seperated by " "
+	 std::cout<<"contains: "<<workingInput<<std::endl;
+	 cleanInput = workingInput;								 //saves a copy of the original string before any string manipulation
 
 	int CPURequired,CPUArrivalTime, Process_Mem, IO_Requests;  //variables we expect to be inputed and that will be passed along to PCB
 	std::list<int> IO_AT;
 	std::list<int> IO_WAIT;
 
-	CPURequired = getnextInput(workingInput, regex);
-//	std::cout<<"CPUR: "<<CPURequired<<std::endl;
+	CPURequired = getnextInput(workingInput, regex);		//calls getNextInput to return the first integer in the input string
+	std::cout<<"CPUR: "<<CPURequired<<std::endl;
+	workingInput = setnextInput(workingInput,regex);		//passes the input string to setnextInput which returns a substring containing the remaining values that need to be input
+
+	CPUArrivalTime = getnextInput(workingInput, regex);		//calls getNextInput to return the first integer in the input string
+	std::cout<<"CPUA: "<<CPUArrivalTime<<std::endl;
+	workingInput = setnextInput(workingInput,regex);		//passes the input string to setnextInput which returns a substring containing the remaining values that need to be input
+
+	Process_Mem = getnextInput(workingInput, regex);		//same
 	workingInput = setnextInput(workingInput,regex);
-	CPUArrivalTime = getnextInput(workingInput, regex);
-//	std::cout<<"CPUA: "<<CPUArrivalTime<<std::endl;
+
+	IO_Requests = getnextInput(workingInput, regex);		//same
 	workingInput = setnextInput(workingInput,regex);
-	Process_Mem = getnextInput(workingInput, regex);
-	workingInput = setnextInput(workingInput,regex);
-	IO_Requests = getnextInput(workingInput, regex);
-	workingInput = setnextInput(workingInput,regex);
-	for(int i=0; i<IO_Requests; i++){
+
+	for(int i=0; i<IO_Requests; i++){						//We expect a value for the IO_AT list and the IO_WAIT list for each number in IO_Requests so this loops should read the rest of the inputs
 		IO_AT.push_back(getnextInput(workingInput,regex));
 		workingInput = setnextInput(workingInput,regex);
 
 		IO_WAIT.push_back(getnextInput(workingInput,regex));
 		workingInput = setnextInput(workingInput,regex);
 	}
+
+
+
 	/* use these inputs to pass along to a or create a PCB object here */
 
-	PCB x = PCB(CPURequired,CPUArrivalTime,Process_Mem,IO_Requests,IO_AT,IO_WAIT);
+	PCB x = PCB(CPURequired,Process_Mem,IO_Requests,IO_AT,IO_WAIT);
 	nullList.push_back(x);
 
-//	std::cout<<"MEM:"<<x.get_memory()<<std::endl;
+	std::cout<<"MEM:"<<x.get_memory()<<std::endl;
 	}
-//	std::cout<<"End of file"<<std::endl;
+	std::cout<<"End of file"<<std::endl;
 }
 
 int InputReader::getnextInput(string input, char regex){
+	/*This method gets the next input from the file string by taking
+	a substring starting from the beginning of the string to the first
+	instance of the regex and passes that input along*/
+
 	string value;
 	value = input.substr(0,input.find_first_of(regex));
 
@@ -83,16 +94,23 @@ int InputReader::getnextInput(string input, char regex){
 }
 
 bool InputReader::isValidFileName(string fileName){
-	//Checks to see if the input file is a text file
-//	std::cout<<"checking file name"<<std::endl;
+	/*This checks to make sure that the filename being passed to the reader
+	is a valid filename (ends in .txt) and returns a boolean indicating
+	whether it is or not */
+
+
+	std::cout<<"checking file name"<<std::endl;
 	int end = fileName.length();
-//	std::cout<<"file length: "<<std::endl;
+	std::cout<<"file length: "<<std::endl;
 	if(fileName.substr(end-4,end)==".txt"){
 		return true;
 	} else return false;
 }
 
 bool InputReader::hasNextInput(string input, char regex){
+	/*This method returns a boolean value indicating whether or not the input string
+	 has more value to be read*/
+
 	if(input.empty()){
 		return false;
 	}
@@ -102,31 +120,17 @@ bool InputReader::hasNextInput(string input, char regex){
 
 }
 
-//string InputReader::getInput(std::ifstream myfile){
-//	std::cout<<"Getting input"<<std::endl;
-////	std::ifstream myfile;
-//	string input;
-//
-////	if(isValidFileName(fileName)){				//checks to make sure that the correct file type is used since iosstream doesn't like variables used here
-////		myfile.open("GeneratedFile.txt");
-////		std::cout<<"Valid File"<<std::endl;
-////	} else std::cout<<"Invalid file name used"<<std::endl; //throws error if invalid filetype used for input file
-//
-//	myfile.open("GeneratedFile.txt");
-//
-//	if(myfile.is_open()){
-//		getline(myfile,input);
-//	}
-//
-//	return input;
-//}
+
 
 string InputReader::setnextInput(string input, char regex){
+	/*This method returns the input string prepared for for the next value to be read, removing the previous
+	value that was input and setting the next value as the first character of the string by taking a substring of
+	itself starting with the first character after the first instance of the regex*/
+
 	string nextInput;
-
 	nextInput = input.substr(input.find_first_of(regex)+1,input.length());
-
 	return nextInput;
+
 }
 
 
