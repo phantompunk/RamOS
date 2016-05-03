@@ -17,10 +17,8 @@ public:
 	std::list<int> m_io_arrival;	// List of arrival times
 	std::list<int> m_io_wait;		// List of wait times
 	IO();
-	void set_arrival(int arrive);
-	void set_wait(int wait);
-//	int get_arrival();				   // Return front arrival time if available
-//	int get_
+	void set_arrival(int arrive); 	// Pushes arrive time to back of list
+	void set_wait(int wait);		// Pushes wait time to back of list
 	std::list<int> get_arrival_list(); // Return list of arrival times
 	std::list<int> get_wait_list();	   // Return list of wait times
 	virtual ~IO();

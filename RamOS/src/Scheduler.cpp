@@ -51,23 +51,25 @@ void Scheduler::dispatch() {
 				it != sm.blocked_state.end(); it++) {
 			if ((*it).get_wait() <= 0){
 				std::cout<<"#####Blocked to Ready#####"<<std::endl;
+				std::cout<<"Current Block size"<<sm.blocked_state.size()<<std::endl;
 				release((*it));
 				sm.blocked_state.erase(it);
+				it = sm.blocked_state.begin();
+				std::cout<<"Current Block size"<<sm.blocked_state.size()<<std::endl;
 //				it = sm.blocked_state.erase(it);
 				display();
 			}
 		}
 	}
 	if (!sm.get_ready_state().empty()) {
-		if (!sm.get_run_state().is_running()) {
+		if (sm.get_run_state().get_pid() == 0) {
 			std::cout<<"#####Ready to Run#####"<<std::endl;
 			sm.ready_to_run();
 			display();
 		}
 		else {
 			// Check for 3 condtions
-			if (sm.get_run_state().get_cpu_pending() <= 0 &&
-					sm.get_run_state().is_running()){
+			if (sm.get_run_state().m_running == true && sm.get_run_state().get_cpu_required() == sm.get_run_state().get_cpu_completed()){
 				std::cout<<"#####Terminated to Exit#####"<<std::endl;
 				terminate();
 				display();
@@ -88,7 +90,7 @@ void Scheduler::dispatch() {
 	}
 	else if (sm.get_ready_state().empty()) {
 		// Check for 3 condtions
-		if (sm.get_run_state().get_cpu_required() == sm.get_run_state().get_cpu_completed()){
+		if (sm.get_run_state().m_running == true && sm.get_run_state().get_cpu_required() == sm.get_run_state().get_cpu_completed()){
 			std::cout<<"#####Terminated to Exit#####"<<std::endl;
 			std::cout<<"PID:"<<sm.get_run_state().get_pid()<<"\tRam:"<<sm.get_run_state().get_memory()<<std::endl;
 			terminate();
@@ -192,7 +194,7 @@ std::list<PCB> Scheduler::get_exit_state() {
 PCB Scheduler::get_run_state() {
 	return sm.run_state;
 }
-double Scheduler::get_runtime() {
+int Scheduler::get_runtime() {
 	//	return (stop-start)/double(CLOCKS_PER_SEC)*1000;
 	return run_clock;
 }
@@ -215,7 +217,7 @@ void Scheduler::display() {
 //	std::cout<<"Free Ram:"<<get_ram()<<"\tRam={"<<std::endl
 //	std::cout<<"************************************************"<<std::endl;
 //	std::cout<<"ClockCycle::"<<get_clock()<<"\tNew Size:"<<sm.new_state.size()<<"\tExit Size:"<<sm.exit_state.size()<<std::endl;
-	std::cout << "Run State:"<<sm.run_state.get_state()<<"\tRun Clock:"<<run_clock<<std::endl;
+	std::cout << "Run State:"<<sm.run_state.get_state()<<"\tRun Clock:"<<run_clock<<"\tRunning?"<<sm.get_run_state().is_running()<<std::endl;
 //	if (sm.run_state.get_pid() != 0){
 		std::cout<<"\tPID:"<<sm.get_run_state().get_pid()<<"\tCycles Left:"<<sm.get_run_state().get_cpu_pending();
 		std::cout<<"\tCycles Done:"<<sm.get_run_state().get_cpu_completed()<<"\tIOs Left:"<<sm.get_run_state().get_io_pending();

@@ -19,13 +19,7 @@ class Scheduler {
 	static int clock_cycle;
 	static int TIMESLICE;
 	static int run_clock;
-//	static int
 public:
-	// Timeslice are ineffect
-	// process runtime
-	// start stop clock()
-	// TODO Null list will hold all incoming pcbs
-	clock_t start,stop;
 	static int ram[];
 	Scheduler();
 	StateManager sm;
@@ -41,16 +35,15 @@ public:
 	void clear_ram(int id);				// Deallocate process memory
 	void increase_clock();				// Increment clock cycle
 	void display_ram();					// Iterate through Ram array
-	void display();
-	StateManager get_state_manager();
-	std::list<PCB> get_null_state();		// Return container for all incoming PCBs
+	void display();						// Displays state info
+	StateManager get_state_manager();	// Return instance
+	std::list<PCB> get_null_state();	// Return container for all incoming PCBs
 	std::list<PCB> get_new_state();		// Return new state list
 	std::list<PCB> get_ready_state();	// Return ready state list
-	std::list<PCB> get_runn_state();
 	std::list<PCB> get_blocked_state();	// Return blocked state list
 	std::list<PCB> get_exit_state();	// Return exit state list
 	PCB get_run_state();				// Return run state pcb
-	double get_runtime();
+	int get_runtime();				// Return clock cycles spent in run state
 	int get_ram();			// Return current amount of free ram
 	int get_clock();		// Return current clock cycle
 	std::string ram_string();

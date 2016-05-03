@@ -20,9 +20,6 @@ std::list<PCB> StateManager::get_new_state() {
 std::list<PCB> StateManager::get_ready_state() {
 	return ready_state;
 }
-std::list<PCB> StateManager::get_runn_state() {
-
-}
 std::list<PCB> StateManager::get_blocked_state() {
 	return blocked_state;
 }

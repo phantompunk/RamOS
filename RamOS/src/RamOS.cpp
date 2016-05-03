@@ -168,24 +168,6 @@ void test_scheduler() {
 	sch.terminate();
 	cout << sch.get_run_state().get_pid()<<endl;
 };
-bool id_done(const PCB& pcb) {
-	if (pcb.io.m_io_pending == 0)
-		return true;
-}
-bool wait_complete(const int& value) {
-	return (value==15);
-};
-
-
-bool x;
-void toggle() {
-	x = !x;
-	//	if (x == false)
-	//		x = true;
-	//	else
-	//		x = false;
-};
-
 int main() {
 //
 //	initscr();
@@ -196,50 +178,50 @@ int main() {
 
 	//
 //	srand(time(0));
-//	// START OF File Generator
-//	ProcessGenerator pgen;
-//	//	srand(time(0));
-//	ofstream fs;
-//	fs.open("GeneratedFile.txt");
-//	int cpu_r;
-//	int cpu_a = 0;
-//	int mem;
-//	int io_r;
-//	int ar;
-//	int wt;
-//	ostringstream x;
-//	string temp;
-//	//	cout<<(rand()%16 + 1)<<endl;
-//	for(int i=0;i<60;i++) {
-//		//		srand(time(0);
-//		pgen.ioArrivalTime_list.clear();
-//		pgen.waitTime_list.clear();
-//		temp = "";
-//		x.str("");
-//		x.clear();
-//		cpu_r = pgen.random_runtime();
-//		cpu_a = pgen.processArrivalTime(cpu_a);
-//		mem = pgen.random_processMemory();
-//		io_r = pgen.random_io();
-//		pgen.io_at(cpu_r, io_r);
-//		pgen.io_wt(io_r);
-//		//		cout<<"CPU_R:"<<cpu_r<<endl;
-//		//		cout<<"CPU_A:"<<cpu_a<<endl;
-//		//		cout<<"MEM:"<<mem<<endl;
-//		//		cout<<"IO:"<<io_r<<endl;
-//		while(!pgen.ioArrivalTime_list.empty()) {
-//			ar = pgen.ioArrivalTime_list.front();
-//			wt = pgen.waitTime_list.front();
-//			pgen.ioArrivalTime_list.pop_front();
-//			pgen.waitTime_list.pop_front();
-//			x << " "<< ar << " "<< wt;
-//
-//			temp = x.str();
-//		}
-//		//		cout << temp<<endl;
-//		fs << cpu_r << " " << cpu_a << " " << mem;
-//		fs << " " << io_r << " " << temp <<endl;
-//	}
+	// START OF File Generator
+	ProcessGenerator pgen;
+	srand(time(0));
+	ofstream fs;
+	fs.open("GeneratedFile.txt");
+	int cpu_r;
+	int cpu_a = 0;
+	int mem;
+	int io_r;
+	int ar;
+	int wt;
+	ostringstream x;
+	string temp;
+	//	cout<<(rand()%16 + 1)<<endl;
+	for(int i=0;i<5;i++) {
+		//		srand(time(0);
+		pgen.ioArrivalTime_list.clear();
+		pgen.waitTime_list.clear();
+		temp = "";
+		x.str("");
+		x.clear();
+		cpu_r = pgen.random_runtime();
+		cpu_a = pgen.processArrivalTime(cpu_a);
+		mem = pgen.random_processMemory();
+		io_r = pgen.random_io();
+		pgen.io_at(cpu_r, io_r);
+		pgen.io_wt(io_r);
+		//		cout<<"CPU_R:"<<cpu_r<<endl;
+		//		cout<<"CPU_A:"<<cpu_a<<endl;
+		//		cout<<"MEM:"<<mem<<endl;
+		//		cout<<"IO:"<<io_r<<endl;
+		while(!pgen.ioArrivalTime_list.empty()) {
+			ar = pgen.ioArrivalTime_list.front();
+			wt = pgen.waitTime_list.front();
+			pgen.ioArrivalTime_list.pop_front();
+			pgen.waitTime_list.pop_front();
+			x << " "<< ar << " "<< wt;
+
+			temp = x.str();
+		}
+		//		cout << temp<<endl;
+		fs << cpu_r << " " << cpu_a << " " << mem;
+		fs << " " << io_r << " " << temp <<endl;
+	}
 	//END OF GEN
 	//
 
@@ -457,4 +439,5 @@ int main() {
 //	printw("Hello");
 //	getch();
 //	endwin();
+	return 0;
 }
