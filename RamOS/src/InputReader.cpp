@@ -17,7 +17,6 @@
 
 InputReader::InputReader() {
 	// TODO Auto-generated constructor stub
-	std::cout<<"Reader Created"<<std::endl;
 
 }
 
